@@ -1,5 +1,12 @@
-//test whether a media query applies
-var checkmedia = (function(undefined){
+//test whether a media type or query applies in a given browser (examples at bottom)
+
+/*
+caveat: it needs doc.body to be ready because IE7 and under won't style the div if its appended to docElem. 
+*/
+
+
+//media query test
+var mediaquery = (function(undefined){
   var cache = {},
     doc = document,
     docElem = doc.documentElement,
@@ -19,24 +26,28 @@ var checkmedia = (function(undefined){
       else {
           styleBlock.appendChild(doc.createTextNode(cssrule));
       }      
-      docElem.appendChild(testDiv);
-      head.appendChild(styleBlock);
-      var divWidth = testDiv.offsetWidth;
-      docElem.removeChild(testDiv);
-      head.removeChild(styleBlock);
-      cache[q] = (divWidth == 10);
+      if(doc.body){
+            doc.body.appendChild(testDiv);
+            head.appendChild(styleBlock);
+            var divWidth = testDiv.offsetWidth;
+            doc.body.removeChild(testDiv);
+            head.removeChild(styleBlock);
+            cache[q] = (divWidth == 10);
+      }
     }
     return cache[q];
   }
 })();
 
+//EXAMPLE USAGE
+
 
 //test 'screen' media type
-if(checkmedia('screen')){
+if(mediaquery('screen')){
   //screen media type supported
 }
 
 //test a handheld media query
-if(checkmedia('screen and (device-max-width: 480px)')){
+if(mediaquery('screen and (device-max-width: 480px)')){
   //smartphone/iphone... maybe run some small-screen related dom scripting?
 }
