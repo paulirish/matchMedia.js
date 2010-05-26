@@ -1,0 +1,37 @@
+
+//test whether a media query applies
+var media = (function(undefined){
+	var cache = {},
+		doc = document,
+		docElem = doc.documentElement,
+		head = doc.getElementsByTagName('head')[0] || docElem;
+		
+	return function(q){
+		if (cache[q] === undefined) {
+			var testDiv = doc.createElement('div');
+			testDiv.setAttribute('id','ejs-qtest');
+			var styleBlock = doc.createElement('style');
+			styleBlock.type = "text/css";
+			styleBlock.appendChild(document.createTextNode('@media '+q+' { #ejs-qtest { position: absolute; width: 10px; } }'));
+			docElem.appendChild(testDiv);
+			head.insertBefore(styleBlock, head.firstChild);
+			var divWidth = testDiv.offsetWidth;
+			docElem.removeChild(testDiv);
+			head.removeChild(styleBlock);
+			cache[q] = (divWidth == 10);
+		}
+		return cache[q];
+	}
+})();
+
+
+
+//test 'screen' media type
+if(media('screen')){
+  //screen media type supported
+}
+
+//test a handheld media query
+if(media('screen and (device-max-width: 480px)')){
+  //smartphone/iphone... maybe run some small-screen related dom scripting?
+}
