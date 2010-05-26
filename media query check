@@ -10,9 +10,16 @@ var media = (function(undefined){
 			var testDiv = doc.createElement('div');
 			testDiv.setAttribute('id','ejs-qtest');
 			var styleBlock = doc.createElement('style');
-			styleBlock.appendChild(document.createTextNode('@media '+q+' { #ejs-qtest { position: absolute; width: 10px; } }'));
+			var cssrule = '@media '+q+' { #ejs-qtest { position: absolute; width: 10px; } }';
+			/*set inner css. credit: http://www.phpied.com/dynamic-script-and-style-elements-in-ie/*/
+			if (styleBlock.styleSheet){ 
+			    styleBlock.styleSheet.cssText = cssrule;
+			} 
+			else {
+			    styleBlock.appendChild(document.createTextNode(cssrule));
+			}			
 			docElem.appendChild(testDiv);
-			head.insertBefore(styleBlock, head.firstChild);
+			head.appendChild(styleBlock);
 			var divWidth = testDiv.offsetWidth;
 			docElem.removeChild(testDiv);
 			head.removeChild(styleBlock);
@@ -21,7 +28,6 @@ var media = (function(undefined){
 		return cache[q];
 	}
 })();
-
 
 
 //test 'screen' media type
