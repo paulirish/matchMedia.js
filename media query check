@@ -1,4 +1,3 @@
-
 //test whether a media query applies
 var media = (function(undefined){
 	var cache = {},
@@ -11,7 +10,6 @@ var media = (function(undefined){
 			var testDiv = doc.createElement('div');
 			testDiv.setAttribute('id','ejs-qtest');
 			var styleBlock = doc.createElement('style');
-			styleBlock.type = "text/css";
 			styleBlock.appendChild(document.createTextNode('@media '+q+' { #ejs-qtest { position: absolute; width: 10px; } }'));
 			docElem.appendChild(testDiv);
 			head.insertBefore(styleBlock, head.firstChild);
