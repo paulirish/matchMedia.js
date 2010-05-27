@@ -1,11 +1,12 @@
-//test whether a media type or query applies in a given browser (examples at bottom)
-
 /*
-caveat: it needs doc.body to be ready because IE7 and under won't style the div if its appended to docElem. 
+ * mediaquery function - test whether a CSS media type or query applies
+ * author: Scott Jehl
+ * Copyright (c) 2010 Filament Group, Inc
+ * MIT license
+ * Developed as a feature of the EnhanceJS Framework (enhancejs.googlecode.com)
+ * note: requires doc.body to be ready
 */
 
-
-//media query test
 var mediaquery = (function(undefined){
   var cache = {},
     doc = document,
@@ -19,14 +20,14 @@ var mediaquery = (function(undefined){
       var styleBlock = doc.createElement('style');
       styleBlock.type = 'text/css';
       var cssrule = '@media '+q+' { #ejs-qtest { position: absolute; width: 10px; } }';
-      /*set inner css text. credit: http://www.phpied.com/dynamic-script-and-style-elements-in-ie/*/
+      /* set inner css text. credit: phpied.com/dynamic-script-and-style-elements-in-ie */
       if (styleBlock.styleSheet){ 
           styleBlock.styleSheet.cssText = cssrule;
       } 
       else {
           styleBlock.appendChild(doc.createTextNode(cssrule));
       }      
-      if(doc.body){
+      if(doc.body){ //IE 6/7 need div appended to body (not docElem)
             doc.body.appendChild(testDiv);
             head.appendChild(styleBlock);
             var divWidth = testDiv.offsetWidth;
@@ -39,7 +40,11 @@ var mediaquery = (function(undefined){
   }
 })();
 
-//EXAMPLE USAGE
+
+
+/*
+ * EXAMPLE USAGE
+*/
 
 
 //test 'screen' media type
