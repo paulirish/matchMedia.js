@@ -4,48 +4,45 @@
  * Copyright (c) 2010 Filament Group, Inc
  * MIT license
  * Developed as a feature of the EnhanceJS Framework (enhancejs.googlecode.com)
- * note: requires doc.body to be ready
+ * thx to: 
+   - phpied.com/dynamic-script-and-style-elements-in-ie for inner css text trick 
+   - @paul_irish for fakeBody trick 
 */
 
-var mediaquery = (function(undefined){
-  var cache = {},
-    doc = document,
+var mediaquery = (function(doc,undefined){
+   var cache = {},
     docElem = doc.documentElement,
-    head = doc.getElementsByTagName('head')[0] || docElem;
+    fakeBody = doc.createElement('body'), 
+    testDiv = doc.createElement('div');
+    
+  testDiv.setAttribute('id','ejs-qtest');
+  fakeBody.appendChild(testDiv);
     
   return function(q){
     if (cache[q] === undefined) {
-      var testDiv = doc.createElement('div');
-      testDiv.setAttribute('id','ejs-qtest');
       var styleBlock = doc.createElement('style');
       styleBlock.type = 'text/css';
       var cssrule = '@media '+q+' { #ejs-qtest { position: absolute; width: 10px; } }';
-      /* set inner css text. credit: phpied.com/dynamic-script-and-style-elements-in-ie */
       if (styleBlock.styleSheet){ 
           styleBlock.styleSheet.cssText = cssrule;
       } 
       else {
           styleBlock.appendChild(doc.createTextNode(cssrule));
       }      
-      if(doc.body){ //IE 6/7 need div appended to body (not docElem)
-            doc.body.appendChild(testDiv);
-            head.appendChild(styleBlock);
-            var divWidth = testDiv.offsetWidth;
-            doc.body.removeChild(testDiv);
-            head.removeChild(styleBlock);
-            cache[q] = (divWidth == 10);
-      }
+      docElem.insertBefore(fakeBody, docElem.firstChild);
+      docElem.insertBefore(styleBlock, docElem.firstChild);
+      cache[q] = (testDiv.offsetWidth == 10);
+      docElem.removeChild(fakeBody);
+      docElem.removeChild(styleBlock);
     }
     return cache[q];
   }
-})();
-
+})(document);
 
 
 /*
  * EXAMPLE USAGE
 */
-
 
 //test 'screen' media type
 if(mediaquery('screen')){
