@@ -32,7 +32,7 @@ if ( !(window.media && media.matchMedium) ){
       if (cache[q] === undefined) {
         var styleBlock = doc.createElement('style');
         styleBlock.type = 'text/css';
-        var cssrule = '@media '+q+' { #ejs-qtest { position: absolute; width: 10px; } }';
+        var cssrule = '@media '+q+' { #ejs-qtest { position: absolute; } }';
         if (styleBlock.styleSheet){ 
             styleBlock.styleSheet.cssText = cssrule;
         } 
@@ -41,7 +41,7 @@ if ( !(window.media && media.matchMedium) ){
         }      
         docElem.insertBefore(fakeBody, docElem.firstChild);
         docElem.insertBefore(styleBlock, docElem.firstChild);
-        cache[q] = (testDiv.offsetWidth == 10);
+        cache[q] = ((window.getComputedStyle ? window.getComputedStyle(testDiv,null) : testDiv.currentStyle)['position'] == 'absolute');
         docElem.removeChild(fakeBody);
         docElem.removeChild(styleBlock);
       }
