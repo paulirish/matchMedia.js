@@ -1,24 +1,20 @@
 /*
- * media.matchMedium()- test whether a CSS media type or media query applies
+ * matchMedia() polyfill - test whether a CSS media type or media query applies
  * primary author: Scott Jehl
  * Copyright (c) 2010 Filament Group, Inc
  * MIT license
  
- * adapted by Paul Irish to use the matchMedium API
- *    http://www.w3.org/TR/cssom-view/#media
+ * adapted by Paul Irish to use the matchMedia API
+ *    http://dev.w3.org/csswg/cssom-view/#dom-window-matchmedia
+ *    which webkit now supports: http://trac.webkit.org/changeset/72552
+ * 
  * Doesn't implement media.type as there's no way for crossbrowser property
  *    getters. instead of media.type == 'tv' just use media.matchMedium('tv')
- 
- * Developed as a feature of the EnhanceJS Framework (enhancejs.googlecode.com)
- * thx to: 
-   - phpied.com/dynamic-script-and-style-elements-in-ie for inner css text trick 
-   - @paul_irish for fakeBody trick 
-*/
+ */
 
-if ( !(window.media && media.matchMedium) ){
+if ( !(window.matchMedia) ){
   
-  window.media = window.media || {};
-  media.matchMedium = (function(doc,undefined){
+  window.matchMedia = (function(doc,undefined){
     
     var cache = {},
         docElem = doc.documentElement,
@@ -31,7 +27,6 @@ if ( !(window.media && media.matchMedium) ){
     return function(q){
       if (cache[q] === undefined) {
         var styleBlock = doc.createElement('style');
-        styleBlock.type = 'text/css';
         var cssrule = '@media '+q+' { #ejs-qtest { position: absolute; } }';
         if (styleBlock.styleSheet){ 
             styleBlock.styleSheet.cssText = cssrule;
@@ -60,17 +55,16 @@ if ( !(window.media && media.matchMedium) ){
  */
 
 //test 'tv' media type
-if (media.matchMedium('tv')) {
+if (matchMedia('tv')) {
   // tv media type supported
 }
 
 //test a mobile device media query
-if (media.matchMedium('screen and (device-max-width: 480px)')) {
+if (matchMedia('screen and (device-max-width: 480px)')) {
   // smartphone/iphone... maybe run some small-screen related dom scripting?
 }
 
 //test landscape orientation
-if (media.matchMedium('(orientation:landscape)')) {
+if (matchMedia('(orientation:landscape)')) {
   // probably tablet in widescreen view
 }
-
