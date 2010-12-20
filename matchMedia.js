@@ -29,7 +29,7 @@ if ( !(window.matchMedia) ){
         var cssrule = '@media '+q+' { #ejs-qtest { position: absolute; } }';
         if (styleBlock.styleSheet){
             styleBlock.styleSheet.cssText = cssrule;
-        // IE8 does not seem to support the styleSheet property nor appendChild:
+        // IE8 does not seem to support the styleSheet property nor appendChild with style elements:
         } else if (styleBlock.canHaveHTML === false){
             styleBlock.text = cssrule;
         } else {
