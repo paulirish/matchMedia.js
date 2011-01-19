@@ -29,14 +29,12 @@ if ( !(window.matchMedia) ){
         	cssrule = '@media '+q+' { #ejs-qtest { position: absolute; } }';
         //must set type for IE!	
         styleBlock.type = "text/css";	
-        if (styleBlock.styleSheet){
-            styleBlock.styleSheet.cssText = cssrule;
-        // IE8 does not seem to support the styleSheet property nor appendChild with style elements:
-        } else if (styleBlock.canHaveHTML === false){
-            styleBlock.text = cssrule;
-        } else {
-            styleBlock.appendChild(doc.createTextNode(cssrule));
-        }
+        if (styleBlock.styleSheet){ 
+          styleBlock.styleSheet.cssText = cssrule;
+        } 
+        else {
+          styleBlock.appendChild(doc.createTextNode(cssrule));
+        } 
         docElem.insertBefore(fakeBody, docElem.firstChild);
         docElem.insertBefore(styleBlock, docElem.firstChild);
         cache[q] = ((window.getComputedStyle ? window.getComputedStyle(testDiv,null) : testDiv.currentStyle)['position'] == 'absolute');
