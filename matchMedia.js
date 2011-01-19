@@ -25,8 +25,10 @@ if ( !(window.matchMedia) ){
     
     return function(q){
       if (cache[q] === undefined) {
-        var styleBlock = doc.createElement('style');
-        var cssrule = '@media '+q+' { #ejs-qtest { position: absolute; } }';
+        var styleBlock = doc.createElement('style'),
+        	cssrule = '@media '+q+' { #ejs-qtest { position: absolute; } }';
+        //must set type for IE!	
+        styleBlock.type = "text/css";	
         if (styleBlock.styleSheet){
             styleBlock.styleSheet.cssText = cssrule;
         // IE8 does not seem to support the styleSheet property nor appendChild with style elements:
