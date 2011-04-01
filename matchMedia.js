@@ -41,7 +41,7 @@ if ( !(window.matchMedia) ){
         docElem.removeChild(fakeBody);
         docElem.removeChild(styleBlock);
         
-        return bool;
+        return { matches: bool, media: q };
     };
     
   })(document);
