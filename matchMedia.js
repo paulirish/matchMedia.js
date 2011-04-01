@@ -1,6 +1,6 @@
 /*
 * matchMedia() polyfill - test whether a CSS media type or media query applies
-* authors: Scott Jehl, Paul Irish
+* authors: Scott Jehl, Paul Irish, Nicholas Zakas
 * Copyright (c) 2010 Filament Group, Inc
 * MIT license
 
@@ -10,42 +10,33 @@
 * To check media type, just do: matchMedia('tv')
 */
 
-if (!window.matchMedia){
-  
-  window.matchMedia = (function(doc, undefined){
-    
-    var bool,
-        docElem = doc.documentElement,
-        fakeBody = doc.createElement('body'),
-        testDiv = doc.createElement('div');
-    
-    testDiv.setAttribute('id','ejs-qtest');
-    fakeBody.appendChild(testDiv);
-    
-    return function(q){
-      
-        var styleBlock = doc.createElement('style'),
-            cssrule = '@media '+q+' { #ejs-qtest { position: absolute; } }';
-        
-        styleBlock.type = "text/css";	//must set type for IE!	
-        if (styleBlock.styleSheet){ 
-          styleBlock.styleSheet.cssText = cssrule;
-        } 
-        else {
-          styleBlock.appendChild(doc.createTextNode(cssrule));
-        } 
-        docElem.insertBefore(fakeBody, docElem.firstChild);
-        docElem.insertBefore(styleBlock, docElem.firstChild);
-        bool = ((window.getComputedStyle ? window.getComputedStyle(testDiv,null) : testDiv.currentStyle)['position'] == 'absolute');
-        docElem.removeChild(fakeBody);
-        docElem.removeChild(styleBlock);
-        
-        return { matches: bool, media: q };
-    };
-    
-  })(document);
 
-}
+window.matchMedia = window.matchMedia || (function(doc, undefined){
+  
+  var bool,
+      docElem  = doc.documentElement,
+      refNode  = docElem.firstElementChild || docElem.firstChild,
+      // fakeBody required for <FF4 when executed in <head>
+      fakeBody = doc.createElement('body'),
+      div      = doc.createElement('div');
+  
+  div.id = 'mq-test-1';
+  div.style.cssText = "position:absolute;top:-100em";
+  fakeBody.appendChild(div);
+  
+  return function(q){
+    
+    div.innerHTML = '_<style media="'+q+'"> #mq-test-1 { width: 42px; }</style>';
+    
+    docElem.insertBefore(fakeBody, refNode);
+    div.removeChild(div.firstChild);
+    bool = div.offsetWidth == 42;  
+    docElem.removeChild(fakeBody);
+    
+    return { matches: bool, media: q };
+  };
+  
+})(document);
 
 
 
