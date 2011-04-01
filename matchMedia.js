@@ -1,8 +1,8 @@
 /*
 * matchMedia() polyfill - test whether a CSS media type or media query applies
 * authors: Scott Jehl, Paul Irish, Nicholas Zakas
-* Copyright (c) 2011 Filament Group, Inc
-* MIT license
+* Copyright (c) 2011 Scott, Paul and Nicholas.
+* Dual MIT/BSD license
 */
 
 
