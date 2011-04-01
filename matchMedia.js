@@ -13,7 +13,7 @@
 
 if ( !(window.matchMedia) ){
   
-  window.matchMedia = (function(doc,undefined){
+  window.matchMedia = (function(doc, undefined){
     
     var bool,
         docElem = doc.documentElement,
@@ -47,3 +47,25 @@ if ( !(window.matchMedia) ){
   })(document);
 
 }
+
+
+
+/*
+ * EXAMPLE USAGE
+ */
+
+//test 'tv' media type
+if (matchMedia('tv').matches) {
+  // tv media type supported
+}
+
+//test a mobile device media query
+if (matchMedia('screen and (max-width: 480px)').matches) {
+  // smartphone/iphone... maybe run some small-screen related dom scripting?
+}
+
+//test landscape orientation
+if (matchMedia('(orientation:landscape)').matches) {
+  // probably tablet in widescreen view
+}
+
