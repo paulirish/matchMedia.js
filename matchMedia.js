@@ -1,17 +1,16 @@
 /*
 * matchMedia() polyfill - test whether a CSS media type or media query applies
-* primary author: Scott Jehl
+* authors: Scott Jehl, Paul Irish
 * Copyright (c) 2010 Filament Group, Inc
 * MIT license
-* adapted by Paul Irish to use the matchMedia API
+
 * http://dev.w3.org/csswg/cssom-view/#dom-window-matchmedia
-* which webkit now supports: http://trac.webkit.org/changeset/72552
+* in Chrome since m10: http://trac.webkit.org/changeset/72552
 *
-* Doesn't implement media.type as there's no way for crossbrowser property
-* getters. instead of media.type == 'tv' just use media.matchMedium('tv')
+* To check media type, just do: matchMedia('tv')
 */
 
-if ( !(window.matchMedia) ){
+if (!window.matchMedia){
   
   window.matchMedia = (function(doc, undefined){
     
