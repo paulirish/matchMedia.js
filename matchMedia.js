@@ -18,18 +18,22 @@ window.matchMedia = (function(doc, undefined){
     this.handleChange = listener;
   };
 
-  // Mock interface of the MediaQueryList object, augmented by methods + propertiesneeded by the polyfill
+  // Mock interface of the MediaQueryList object, augmented by methods + properties needed by the polyfill
   // https://developer.mozilla.org/en/DOM/MediaQueryList
   var MediaQueryList = function(q){
     this.media = q;
-    this.matches = false;
+    this.matches = null;
     this.addListener = function(listener){
       this._listeners.push(new MediaQueryListListener(listener));
     };
     this.removeListener = function(listener){
       this._listeners.remove(new MediaQueryListListener(listener));
     };
+
+    // List of listeners to be run when updated.
     this._listeners = [];
+
+    // Checks for match, updates values and runs listeners if appropriate.
     this._matchCheck = function(scope){
       var mql = (typeof scope == "undefined") ? this : scope;
       if(mql._testElement.offsetWidth == 42 != mql.matches){
@@ -45,6 +49,7 @@ window.matchMedia = (function(doc, undefined){
 
     var mqList = new MediaQueryList(q);
 
+    // Set up DOM listeners
     var docElem = doc.documentElement,
         refNode = docElem.firstElementChild || docElem.firstChild,
         fakeBody = doc.createElement('body'),
@@ -56,9 +61,11 @@ window.matchMedia = (function(doc, undefined){
     fakeBody.appendChild(div);
     mqList._testElement = div;
 
+    // Attempt to update 24 times/second
+    // http://en.wikipedia.org/wiki/24p
     setInterval(function(){
       mqList._matchCheck(mqList);
-    }, 41.667);
+    }, 1000/24);
 
     return mqList;
 
