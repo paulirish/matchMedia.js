@@ -24,7 +24,6 @@ window.matchMedia = window.matchMedia || (function(doc, undefined){
 
     docElem.insertBefore(fakeBody, refNode);
     bool = div.offsetWidth == 42;
-    docElem.removeChild(fakeBody);
 
     return { matches: bool, media: q };
   };
