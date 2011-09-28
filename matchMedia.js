@@ -1,7 +1,7 @@
 /*
 * matchMedia() polyfill - test whether a CSS media type or media query applies
 * authors: Scott Jehl, Paul Irish, Nicholas Zakas, Chuck Harmston
-* Copyright (c) 2011 Scott, Paul, Nicholas, and chuck.
+* Copyright (c) 2011 Scott, Paul, Nicholas, and Chuck.
 * Dual MIT/BSD license
 */
 
