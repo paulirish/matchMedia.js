@@ -5,7 +5,12 @@
 * Dual MIT/BSD license
 */
 
-window.matchMedia = window.matchMedia || (function(doc, undefined){
+// For now, we're not going to use the native matchMedia at all.
+// The only browser that has fully implemented it is Firefox, and even then
+// it's very buggy: https://bugzilla.mozilla.org/show_bug.cgi?id=670666
+// window.matchMedia = window.matchMedia || (function(doc, undefined){
+
+window.matchMedia = (function(doc, undefined){
 
   // Mock interface of the MediaQueryListListener object
   // https://developer.mozilla.org/en/DOM/MediaQueryListListener
