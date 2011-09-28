@@ -5,7 +5,7 @@
 * Dual MIT/BSD license
 */
 
-window.matchMedia = /*window.matchMedia || */(function(doc, undefined){
+window.matchMedia = window.matchMedia || (function(doc, undefined){
 
   // Mock interface of the MediaQueryListListener object
   // https://developer.mozilla.org/en/DOM/MediaQueryListListener
@@ -56,7 +56,7 @@ window.matchMedia = /*window.matchMedia || */(function(doc, undefined){
     }, 41.667);
 
     return mqList;
-    
+
   };
 
 })(document);
