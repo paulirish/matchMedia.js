@@ -6,6 +6,10 @@
 * **Spec**: [dev.w3.org/csswg/cssom-view/#dom-window-matchmedia](http://dev.w3.org/csswg/cssom-view/#dom-window-matchmedia)
 * **Native support**: in Chrome [since m10](http://trac.webkit.org/changeset/72552).
 
+### How about resizing the browser?
+Paul Hayes made [tackled this using CSS transitions and their transitionEnd event](http://www.paulrhayes.com/2011-11/use-css-transitions-to-link-media-queries-and-javascript/) 
+
+His code: https://github.com/fofr/matchMedia.js -- though currently it doesnt support IE6-9, since they dont have transitions, obviously. :)
 
 
 ## Usage
