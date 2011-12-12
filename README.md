@@ -29,6 +29,18 @@ His code: https://github.com/fofr/matchMedia.js -- though currently it doesnt su
       // probably tablet in widescreen view
     }
 
+### Bind listener to media query change
+    var mql = matchMedia('all and (orientation:landscape)');
+    function handleOrientationChange(mql) {
+        if (mql.matches) {
+            console.log('Not in landscape');
+        } else{
+            console.log('In Landscape');
+        }
+    }
+    mql.addListener(handleOrientationChange);
+    handleOrientationChange(mql);
+
 
 ## Used in: 
 
