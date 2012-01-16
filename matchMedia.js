@@ -1,10 +1,4 @@
-/*
-* matchMedia() polyfill - test whether a CSS media type or media query applies
-* authors: Scott Jehl, Paul Irish, Nicholas Zakas
-* Copyright (c) 2011 Scott, Paul and Nicholas.
-* Dual MIT/BSD license
-*/
-
+/*! matchMedia() polyfill - Test a CSS media type/query in JS. Authors & copyright (c) 2012: Scott Jehl, Paul Irish, Nicholas Zakas. Dual MIT/BSD license */
 
 window.matchMedia = window.matchMedia || (function(doc, undefined){
   
