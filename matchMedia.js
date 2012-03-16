@@ -11,6 +11,7 @@ window.matchMedia = window.matchMedia || (function(doc, undefined){
   
   div.id = 'mq-test-1';
   div.style.cssText = "position:absolute;top:-100em";
+  fakeBody.style.background = "none!important";
   fakeBody.appendChild(div);
   
   return function(q){
