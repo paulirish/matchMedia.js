@@ -11,7 +11,7 @@
 				timer,
 				check = function(){
 					var list = oldMM( q );
-					if( list.matches && !last ){
+					if( list.matches != last ){
 						for( var i =0, il = listeners.length; i< il; i++ ){
 							listeners[ i ].call( ret, list );
 						}
