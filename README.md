@@ -33,5 +33,5 @@ His code: https://github.com/fofr/matchMedia.js -- though currently it doesnt su
 ## Used in: 
 
 * [Respond.js](https://github.com/scottjehl/Respond)
-* [MarshallJS](https://github.com/PaulKinlan/marshall)
+* [FormFactor](https://github.com/PaulKinlan/formfactor)
 * [Modernizr](http://www.modernizr.com/)
