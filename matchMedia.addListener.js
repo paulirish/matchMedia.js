@@ -10,8 +10,10 @@
 				last = false,
 				timer,
 				check = function(){
-					var list = oldMM( q );
-					if( list.matches && !last ){
+					var list = oldMM( q ),
+						unmatchToMatch = list.matches && !last,
+						matchToUnmatch = !list.matches && last;
+					if( unmatchToMatch || matchToUnmatch ){
 						for( var i =0, il = listeners.length; i< il; i++ ){
 							listeners[ i ].call( ret, list );
 						}
