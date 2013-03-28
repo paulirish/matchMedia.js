@@ -1,7 +1,7 @@
 /*! matchMedia() polyfill addListener/removeListener extension. Author & copyright (c) 2012: Scott Jehl. Dual MIT/BSD license */
 (function(){
 	// monkeypatch unsupported addListener/removeListener with polling
-	if( !window.matchMedia( "" ).addListener ){
+	if( !window.matchMedia("only screen").addListener ){
 		var oldMM = window.matchMedia;
 		
 		window.matchMedia = function( q ){
