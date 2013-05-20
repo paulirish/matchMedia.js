@@ -7,7 +7,7 @@
 		window.matchMedia = function( q ){
 			var ret = oldMM( q ),
 				listeners = [],
-				last = false,
+				last = ret.matches,
 				timer,
 				check = function(){
 					var list = oldMM( q ),
