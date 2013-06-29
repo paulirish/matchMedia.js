@@ -1,5 +1,5 @@
 {
-  "author": "Paul Irish",
+  "author": "Scott Jehl",
   "name": "matchMedia",
   "description": "matchMedia polyfill for testing media queries in JS",
   "version": "0.1.0",
