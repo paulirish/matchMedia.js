@@ -16,7 +16,11 @@ window.matchMedia = window.matchMedia || (function( doc, undefined ) {
   fakeBody.style.background = "none";
   fakeBody.appendChild(div);
 
+  var cache = {};
+
   return function(q){
+
+    if (cache[q]) return cache[q];
 
     div.innerHTML = "&shy;<style media=\"" + q + "\"> #mq-test-1 { width: 42px; }</style>";
 
@@ -24,13 +28,16 @@ window.matchMedia = window.matchMedia || (function( doc, undefined ) {
     bool = div.offsetWidth === 42;
     docElem.removeChild( fakeBody );
 
-    return {
+    cache[q] = {
       matches: bool,
       media: q
     };
 
+    window.setTimeout(function() { cache = {}; }, 0);
+
+    return cache[q];
+
   };
 
 }( document ));
-
 
