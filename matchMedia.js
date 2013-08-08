@@ -6,7 +6,6 @@ window.matchMedia = window.matchMedia || (function( doc, undefined ) {
 
   var bool,
       docElem = doc.documentElement,
-      refNode = docElem.firstElementChild || docElem.firstChild,
       // fakeBody required for <FF4 when executed in <head>
       fakeBody = doc.createElement( "body" ),
       div = doc.createElement( "div" );
@@ -20,7 +19,7 @@ window.matchMedia = window.matchMedia || (function( doc, undefined ) {
 
     div.innerHTML = "&shy;<style media=\"" + q + "\"> #mq-test-1 { width: 42px; }</style>";
 
-    docElem.insertBefore( fakeBody, refNode );
+    docElem.appendChild( fakeBody );
     bool = div.offsetWidth === 42;
     docElem.removeChild( fakeBody );
 
