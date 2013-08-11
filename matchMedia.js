@@ -3,43 +3,38 @@
 window.matchMedia || (window.matchMedia = function() {
     "use strict";
 
-    var styleMedia  = (window.styleMedia || window.media);
+    // For browsers that support matchMedium api such as IE 9 and webkit
+    var styleMedia = (window.styleMedia || window.media);
 
-    // For those that doen't support matchMedium
+    // For those that don't support matchMedium
     if (!styleMedia) {
         var style       = document.createElement('style'),
-            info        = null,
-            setStyle     = function(text) {
+            script      = document.getElementsByTagName('script')[0],
+            info        = null;
+
+        style.type  = 'text/css';
+        style.id    = 'matchmediajs-test';
+
+        script.parentNode.insertBefore(style, script);
+
+        // 'style.currentStyle' is used by IE <= 8 and 'window.getComputedStyle' for all other browsers
+        info = ('getComputedStyle' in window) && window.getComputedStyle(style) || style.currentStyle;
+
+        styleMedia = {
+            matchMedium: function(media) {
+                var text = '@media ' + media + '{ #matchmediajs-test { width: 1px; } }';
+
+                // 'style.styleSheet' is used by IE <= 8 and 'style.textContent' for all other browsers
                 if (style.styleSheet) {
                     style.styleSheet.cssText = text;
                 } else {
                     style.textContent = text;
                 }
-            };
 
-        style.type  = 'text/css';
-        style.id    = 'matchmediajs-test';
-
-        document.getElementsByTagName('head')[0].appendChild(style);
-        info = ('getComputedStyle' in window) && window.getComputedStyle(style) || style.currentStyle;
-
-        styleMedia = {
-            matchMedium: function(media) {
-                var text = '@media ' + media + '{ #matchmediajs-test { width: 1px; } }',
-                    match;
-
-                // Add css text
-                setStyle(text);
-
-                match = info.width === '1px';
-
-                // remove css text
-                setStyle('');
-
-                return match;
+                // Test if media query is true or false
+                return info.width === '1px';
             }
         };
-
     }
 
     return function(media) {
