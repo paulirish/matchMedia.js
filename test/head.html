@@ -4,11 +4,16 @@
         <title>matchMedia polyfill test page</title>
         <script type="text/javascript" src="lib/JSLitmus.js"></script>
         <script type="text/javascript" src="../matchMedia.js"></script>
+        <script type="text/javascript" src="../matchMedia.addListener.js"></script>
         <script type="text/javascript">
             var typeScreen  = window.matchMedia('screen'),
                 typePrint   = window.matchMedia('print'),
                 onlyAll     = window.matchMedia('only all'),
-                minWidth    = window.matchMedia('(min-width: 0px)');
+                minWidth    = window.matchMedia('(min-width: 0px)'),
+                minWidth768 = window.matchMedia('(min-width: 768px)'),
+                handleMinWidth768 = function(mql) {
+                    alert('Browsers that support CSS3 media queries: "(min-width: 768px)" = ' + mql.matches);
+                };
 
             // This group should be supported by everything
             alert('All browsers: "screen" = ' + typeScreen.matches);
@@ -28,6 +33,9 @@
             // Blackberry 7.0
             alert('Browsers that support CSS3 media queries: "only all" = ' + onlyAll.matches);
             alert('Browsers that support CSS3 media queries: "(min-width: 0px)" = ' + minWidth.matches);
+
+            // Testing addListener support
+            minWidth768.addListener(handleMinWidth768);
         </script>
         <script type="text/javascript">
             // Performance test
