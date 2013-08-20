@@ -1,47 +1,71 @@
 /*! matchMedia() polyfill addListener/removeListener extension. Author & copyright (c) 2012: Scott Jehl. Dual MIT/BSD license */
 (function(){
-	// monkeypatch unsupported addListener/removeListener with polling
-	if( !window.matchMedia( "all" ).addListener ){
-		var oldMM = window.matchMedia;
-		
-		window.matchMedia = function( q ){
-			var ret = oldMM( q ),
-				listeners = [],
-				last = ret.matches,
-				timer,
-				check = function(){
-					var list = oldMM( q ),
-						unmatchToMatch = list.matches && !last,
-						matchToUnmatch = !list.matches && last;
-                                                
-                                        //fire callbacks only if transitioning to or from matched state
-					if( unmatchToMatch || matchToUnmatch ){
-						for( var i =0, il = listeners.length; i< il; i++ ){
-							listeners[ i ].call( ret, list );
-						}
-					}
-					last = list.matches;
-				};
-			
-			ret.addListener = function( cb ){
-				listeners.push( cb );
-				if( !timer ){
-					timer = setInterval( check, 1000 );
-				}
-			};
+    // monkeypatch unsupported addListener/removeListener
+    if (window.matchMedia && !window.matchMedia('all').addListener){
+        var localMatchMedia = window.matchMedia,
+            hasMediaQueries = localMatchMedia('only all').matches,
+            isListening     = false,
+            timeoutID       = 0,    // setTimeout for debouncing 'handleChange'
+            queries         = [],   // Contains each 'mql' and associated 'listeners' if 'addListener' is used
+            handleChange    = function(evt) {
+                // Debounce
+                clearTimeout(timeoutID);
 
-			ret.removeListener = function( cb ){
-				for( var i =0, il = listeners.length; i< il; i++ ){
-					if( listeners[ i ] === cb ){
-						listeners.splice( i, 1 );
-					}
-				}
-				if( !listeners.length && timer ){
-					clearInterval( timer );
-				}
-			};
-			
-			return ret;
-		};
-	}
+                timeoutID = setTimeout(function() {
+                    for (var i = 0, il = queries.length; i < il; i++) {
+                        var mql         = queries[i].mql,
+                            listeners   = queries[i].listeners || [],
+                            matches     = localMatchMedia(mql.media).matches;
+
+                        // Update mql.matches value and call listeners
+                        // Fire listeners only if transitioning to or from matched state
+                        if (matches !== mql.matches) {
+                            mql.matches = matches;
+
+                            for (var j = 0, jl = listeners.length; j < jl; j++) {
+                                listeners[j].call(window, mql);
+                            }
+                        }
+                    }
+                }, 30);
+            };
+
+        window.matchMedia = function(media) {
+            var mql         = localMatchMedia(media),
+                listeners   = [],
+                id          = 0;
+
+            mql.addListener = function(listener) {
+                // Changes would not occur to css media type so return now (Affects IE <= 8)
+                if (!hasMediaQueries) {
+                    return;
+                }
+
+                // Set up 'resize' listener for browsers that support CSS3 media queries (Not for IE <= 8)
+                // There should only ever be 1 resize listener running for performance
+                if (!isListening) {
+                    isListening = true;
+                    window.addEventListener('resize', handleChange, true);
+                }
+
+                // Push object only if it has not been pushed already
+                !id && (id = queries.push({
+                    mql         : mql,
+                    listeners   : listeners
+                }));
+
+                listeners.push(listener);
+            };
+
+            mql.removeListener = function(listener) {
+                for (var i = 0, il = listeners.length; i < il; i++){
+                    if (listeners[i] === listener){
+                        listeners.splice(i, 1);
+                    }
+                }
+            };
+
+            return mql;
+        };
+    }
 }());
