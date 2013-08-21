@@ -33,7 +33,7 @@
         window.matchMedia = function(media) {
             var mql         = localMatchMedia(media),
                 listeners   = [],
-                id          = 0;
+                index       = 0;
 
             mql.addListener = function(listener) {
                 // Changes would not occur to css media type so return now (Affects IE <= 8)
@@ -49,10 +49,12 @@
                 }
 
                 // Push object only if it has not been pushed already
-                !id && (id = queries.push({
-                    mql         : mql,
-                    listeners   : listeners
-                }));
+                if (index === 0) {
+                    index = queries.push({
+                        mql         : mql,
+                        listeners   : listeners
+                    });
+                }
 
                 listeners.push(listener);
             };
