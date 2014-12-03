@@ -1,5 +1,5 @@
 {
-  "name": "matchMedia",
+  "name": "matchmedia",
   "version": "0.2.0",
   "description": "matchMedia polyfill for testing media queries in JS",
   "main": "matchMedia.js",
