@@ -3,16 +3,19 @@
 ;(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['exports'], factory);
-    } else {
+        if (root.matchMedia) {
+            define(function () {
+                return root.matchMedia;
+            });
+        } else define(factory);
+    } else if (!root.matchMedia) {
         // Browser globals
-        factory(root);
+        root.matchMedia = factory();
     }
-}(this, function (exports) {
+}(this, function () {
     "use strict";
-    if (exports.matchMedia) return;
 
-    exports.matchMedia = (function () {
+    return (function () {
         // For browsers that support matchMedium api such as IE 9 and webkit
         var styleMedia = (window.styleMedia || window.media);
 
