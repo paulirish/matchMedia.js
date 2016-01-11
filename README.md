@@ -1,3 +1,5 @@
+[![npm](https://img.shields.io/npm/v/matchmedia-polyfill.svg)](https://npm.com/package/matchmedia-polyfill)
+
 #matchMedia() polyfill
 
 ## test whether a CSS media type or media query applies
