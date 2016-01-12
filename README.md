@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/matchmedia-polyfill.svg)](https://npm.com/package/matchmedia-polyfill)
+[![npm](https://img.shields.io/npm/v/matchmedia-polyfill.svg)](https://npmjs.com/package/matchmedia-polyfill)
 
 #matchMedia() polyfill
 
