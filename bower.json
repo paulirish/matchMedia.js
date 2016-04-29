@@ -6,7 +6,7 @@
   "homepage": "http://github.com/paulirish/matchMedia.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/paulirish/matchMedia.js"
+    "url": "git://github.com/paulirish/matchMedia.js.git"
   },
   "main": "./matchMedia.js"
 }
