@@ -2,7 +2,7 @@
   "author": "Scott Jehl",
   "name": "matchmedia-polyfill",
   "description": "matchMedia polyfill for testing media queries in JS",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "http://github.com/paulirish/matchMedia.js",
   "repository": {
     "type": "git",
