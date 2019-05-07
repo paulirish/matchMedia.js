@@ -3,7 +3,7 @@
   "name": "matchmedia-polyfill",
   "description": "matchMedia polyfill for testing media queries in JS",
   "license": "MIT",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "http://github.com/paulirish/matchMedia.js",
   "repository": {
     "type": "git",
