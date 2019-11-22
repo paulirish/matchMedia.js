@@ -7,7 +7,7 @@
 ## Usage
 
 ```js
-// Likely want to requier both polyfills..
+// Likely want to require both polyfills..
 require('matchmedia-polyfill');
 require('matchmedia-polyfill/matchMedia.addListener');
 ```
